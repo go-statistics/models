@@ -175,7 +175,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        tool: [smoracle, roracle]
+        tool: [smoracle, roracle, nistfetch]
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-go@v7
@@ -203,6 +203,7 @@ jobs:
         with:
           go-version: 1.27.3
       - run: go test -run='^$' -fuzz='^FuzzName$' -fuzztime=10s .
+      - run: go test -run='^$' -fuzz='^FuzzParse$' -fuzztime=20s ./internal/nist
 
   govulncheck:
     name: govulncheck

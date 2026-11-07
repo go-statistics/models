@@ -1,0 +1,2 @@
+go test fuzz v1
+string("Dataset Name: a\nProcedure: b\nStarting Values (lines 1 to 99999999999999999999)\nCertified Values (lines 1 to 1)\nData (lines 2 to 3)\ny\n nan\n")

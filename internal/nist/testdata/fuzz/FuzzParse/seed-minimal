@@ -1,0 +1,2 @@
+go test fuzz v1
+string("NIST/ITL StRD\nDataset Name:  Tiny (Tiny.dat)\nFile Format:   ASCII\n               Certified Values (lines 7 to  8)\n               Data             (lines 13 to 14)\nProcedure:     Linear Least Squares Regression\nc1\nc2\n               2 Observations\n\n\nData:  y  x\n 1 2\n 3 4\n")
