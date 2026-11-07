@@ -1,0 +1,2 @@
+# The NIST files are hashed in SOURCES: no end-of-line conversion on checkout.
+testdata/nist/** -text
