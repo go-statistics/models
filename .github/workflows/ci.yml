@@ -165,6 +165,33 @@ jobs:
           done
           exit $fail
 
+  # The oracle tools are separate modules (design-models.md, section 13): the
+  # root `./...` does not reach them, so each is vetted and tested here with
+  # its own 100% gate. Their Python and R oracles are replaced by a fake
+  # runner in the tests; nothing here needs uv, Docker or R.
+  tools:
+    name: tools (${{ matrix.tool }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        tool: [smoracle]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v7
+        with:
+          go-version: 1.27.3
+      - name: Vet + test + 100% coverage gate
+        working-directory: tools/${{ matrix.tool }}
+        shell: bash
+        run: |
+          go vet ./...
+          go test -race -coverprofile=cover.out ./...
+          cov=$(go tool cover -func=cover.out | tail -1 | awk '{print $3}' | tr -d '%')
+          echo "coverage: ${cov}%"
+          awk -v t="$cov" 'BEGIN { exit !(t+0 >= 100.0) }' || {
+            echo "::error::coverage ${cov}% < 100%"; exit 1; }
+
   # Fuzz smoke: every Fuzz target runs for a few seconds. The corpus under
   # testdata/fuzz is committed and also replayed by the plain `go test` lanes.
   fuzz-smoke:
