@@ -175,7 +175,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        tool: [smoracle]
+        tool: [smoracle, roracle]
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-go@v7
